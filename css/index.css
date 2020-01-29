@@ -94,3 +94,7 @@ form>button{
     font-size: 12px;
     font-style: italic;
 }
+
+#loginForm{
+    width: 50%;
+}
