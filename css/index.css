@@ -1,0 +1,86 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+}
+html{
+    height: 100%;
+}
+body{
+    font-family: 'Verdana', sans-serif;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    border: 1px black solid;
+    display:flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+header{
+    color: white;
+    padding: 30px;
+    background-color: hsl(51, 100%, 49%);
+    width: 100%;
+    font-size: 50px;
+    font-weight: bold;
+}
+
+nav{
+    background-color:rgb(255, 234, 118) ;
+    font-size: large;
+    font-weight: bold;
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: right;
+}
+
+nav>*{
+    padding: 15px;
+    margin-left: auto;
+    width: 150px;
+   /* border: solid black 1px;*/
+    text-align: center;
+    color: brown;
+    text-decoration: none;
+}
+
+main{
+    background-color: rgb(255, 247, 232);
+    height:100%;
+    display:flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+nav>*:hover{
+    background-color: hsl(51, 100%, 80%);
+}
+
+main>form{
+   
+    width:100%;
+    padding:0;
+    
+}
+
+form>*{
+    margin:0;
+    padding: 0;
+}
+
+form>input{
+    width:94%;
+}
+
+form>button{
+    width:5%;
+}
+
+main>div{
+    text-align: justify;
+    padding: 10px;
+    border-bottom: solid grey 1px;
+    width: 90%;
+}
