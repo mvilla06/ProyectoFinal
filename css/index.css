@@ -78,9 +78,19 @@ form>button{
     width:5%;
 }
 
-main>div{
+.restaurante{
+    font-size: 18px;
     text-align: justify;
     padding: 10px;
     border-bottom: solid grey 1px;
     width: 90%;
+}
+
+.descripcion{
+    font-size: 14px;
+}
+
+.review{
+    font-size: 12px;
+    font-style: italic;
 }
