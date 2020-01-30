@@ -98,3 +98,7 @@ form>button{
 #loginForm{
     width: 50%;
 }
+
+table, tr, th, td {
+    border: 1px solid black;
+}
