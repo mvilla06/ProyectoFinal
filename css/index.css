@@ -35,15 +35,94 @@ nav{
     text-align: right;
 }
 
-nav>*{
+nav>*, #login{
     padding: 15px;
-    margin-left: auto;
+    
     width: 150px;
    /* border: solid black 1px;*/
     text-align: center;
     color: black;
     text-decoration: none;
 }
+
+#login, #perfil{
+    margin-left: auto;
+}
+
+.pedido, .orden{
+    width: 90%;
+    border-radius: 5px;
+    border:solid grey 1px;
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: white;
+    margin: 2px;
+}
+
+
+.pedido img{
+   width: 100px;
+   height: 100px;
+   padding: 5px;
+}
+
+.pedido .descripcion{
+    width:65%;
+    
+}
+
+ .descripcion .producto{
+    padding: 0;
+    list-style-position: inside;
+    font-size: 18px;
+    list-style: none;
+    
+}
+
+.precio{
+    width:20%;
+    
+    text-align: right;
+    padding: 10px;
+    font-weight: bold;
+}
+
+.descripcion{
+    width: 80%;
+    text-align: justify;
+    padding:10px;
+}
+
+.pedido .precio{
+    width:15%;
+    border-right: lightgray dashed 1px;
+}
+
+.status span:hover{
+    font-weight: bold;
+    cursor: pointer;
+}
+
+ .precio span{
+    text-align: center;
+    font-style: italic;
+    font-weight: normal;
+    font-size: initial;
+}
+
+.pedido .status{
+    color: rgb(113, 113, 243);
+    width: 20%;
+    font-style: italic;
+    align-self: center;
+}
+
+.pedido .status p{
+    font-size: small;
+    color: black;
+}
+
 
 main{
     background-color: rgb(255, 247, 232);
@@ -52,6 +131,7 @@ main{
     flex-direction: column;
     text-align: center;
     align-items: center;
+    padding:10px;
 }
 
 nav>*:hover{
