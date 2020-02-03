@@ -9,12 +9,12 @@
   <body>
       <header>App de comida</header>
       <nav>
-          <a href="./subpages/login.html">Login</a>
+          <a href="./subpages/login.html" id='login'>Login</a>
       </nav>
       <main>
-          <form>
-              <input type="text" placeholder="Buscar restaurantes">
-              <button type="submit">&#x1F50D</button>
+          <form id='busqueda'>
+              <input id='busquedaTexto' type="text" placeholder="Buscar restaurantes">
+              <button type="submit" id="buscar">&#x1F50D</button>
           </form>
           <!--Información dinámica de la base de datos de restaurantes, instancias ejemplo-->
           <div class='restaurante'>Restaurante 1
@@ -27,6 +27,10 @@
           </div>
 
       </main>
-    <script src="./js/"></script>
+      <script
+      src="https://code.jquery.com/jquery-3.4.1.js"
+      integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+      crossorigin="anonymous"></script> 
+    <script src="./js/index.js"></script>
   </body>
 </html>
