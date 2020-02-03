@@ -54,7 +54,7 @@ let Restaurante = mongoose.Schema({
     }]
 });
 
-let Restaurantes = mongoose.model('Restaurantes', Restaurante);
+let Restaurantes = mongoose.model('Restaurantes', Restaurante, 'Restaurantes');
 
 let RestaurantesLista = {
 	getAll : function(){
@@ -149,7 +149,7 @@ let UsuariosLista = {
         return Usuarios.find({correo:correo})
             .then(usuario=>{
                 if(usuario)
-                return usuario.pedidos
+                return usuario
             })
             .catch(error=>{
                 throw error;
@@ -163,6 +163,20 @@ let UsuariosLista = {
     },
     confirmar:function(){
         
+    },
+    nuevo:function(obj){
+        return Usuarios.create({
+            nombre:obj.nombre,
+            direccion: obj.direccion,
+            correo:obj.correo,
+            carrito:{},
+            pedidos:[]
+        }).then(nuevo=>{
+            return nuevo;
+        })
+        .catch(err=>{
+            throw error;
+        })
     }
 }
 

@@ -6,7 +6,10 @@ function watchForm(){
         event.preventDefault();
         let user = $("#user").val();
         let password = $('#password').val();
-        if(!(user=="" || password=="")){
+        let nombre = $("#nombre").val();
+        let calle = $('#calle').val();
+        let num = $('#num').val();
+        if(!(user=="" || password=="" ||nombre==""|| !num ||calle=="")){
             if ((/([a-z]|[A-Z]|[0-9])\@([a-z])*.com/).test(user)){
                 $.ajax({
                     method:"POST",
@@ -16,10 +19,13 @@ function watchForm(){
                     data:JSON.stringify({
                         user: user,
                         password: password,
-                        tipo: usuario
+                        tipo: 'usuario',
+                        nombre: nombre,
+                        direccion:{calle:calle, numero: num}
                     }),
                     success:function(responseJSON){
                         console.log(responseJSON);
+                        window.location.href = '../login.html'
                     },
                     error: function(error){
                         console.log( error);
@@ -34,6 +40,10 @@ function watchForm(){
         }
         $('#user').val('');
         $('#password').val('');
+        $('#nombre').val('');
+        $('#calle').val('');
+        $('#num').val('');
+
     })
 }
 
