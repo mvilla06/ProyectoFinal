@@ -161,10 +161,17 @@ app.post('/api/newRestaurant/', jsonParser, (req, res) =>{
     });
 });
 
-
-
-
-
+app.post('/api/registraUserRestaurante/', jsonParser, (req, res) =>{
+    let user = req.body.correo;
+    let pass = req.body.password;
+    PerfilesLista.registrarRestaurante(user, pass)
+    .then((response)=>{
+        return res.status(201).json(user);
+    })
+    .catch((err)=>{
+        throw Error(err);
+    });
+});
 
 let server;
 
