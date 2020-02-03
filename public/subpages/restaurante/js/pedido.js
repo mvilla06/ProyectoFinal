@@ -34,42 +34,89 @@ function displayInformation(responseJSON){
 	let col1 = document.createElement('th');
 	let col2 = document.createElement('th');
 	let col3 = document.createElement('th');
+	let col4 = document.createElement('th');
+	let col5 = document.createElement('th');
 	col1.innerHTML = "Producto";
 	row.appendChild(col1);
 	col2.innerHTML = "Descripción";
 	row.appendChild(col2);
 	col3.innerHTML = "Precio";
 	row.appendChild(col3);
+	col4.innerHTML = "Cantidad";
+	row.appendChild(col4);
+	col5.innerHTML = "Subtotal";
+	row.appendChild(col5);
 	menu.appendChild(row);
 	responseJSON[0].menu.forEach((element)=>{
 		let row = document.createElement('tr');
 		let col1 = document.createElement('td');
 		let col2 = document.createElement('td');
 		let col3 = document.createElement('td');
+		let col4 = document.createElement('td');
+		let col5 = document.createElement('td');
 		col1.innerHTML = element.producto;
 		row.appendChild(col1);
 		col2.innerHTML = element.descripcion;
 		row.appendChild(col2);
 		col3.innerHTML = "$"+element.precio;
 		row.appendChild(col3);
+		let Qinput = document.createElement('input');
+		Qinput.type = "Number";
+		Qinput.value = 0;
+		col5.innerHTML = "$"+Qinput.value*parseFloat(element.precio);
+		col4.appendChild(Qinput);
+		row.appendChild(col4);
+		row.appendChild(col5);
 		menu.appendChild(row);
 	});
-	let reviewsDiv = document.getElementById('reviews');
-	reviewsDiv.innerHTML = "";
-	responseJSON[0].review.forEach((element)=>{
-		let commentDiv = document.createElement('div');
-		let bold = document.createElement('b');
-		bold.innerHTML = "("+element.calificacion+") ";
-		commentDiv.appendChild(bold);
-		let span = document.createElement('span');
-		span.innerHTML = element.descripcion;
-		commentDiv.appendChild(span);
-		reviewsDiv.appendChild(commentDiv);
+	row = document.createElement('tr');
+	col1 = document.createElement('th');
+	col2 = document.createElement('th');
+	col3 = document.createElement('th');
+	col4 = document.createElement('th');
+	col5 = document.createElement('th');
+	col1.innerHTML = " ";
+	row.appendChild(col1);
+	col2.innerHTML = " ";
+	row.appendChild(col2);
+	col3.innerHTML = " ";
+	row.appendChild(col3);
+	col4.innerHTML = "Total";
+	row.appendChild(col4);
+	let total = 0;
+	let filas = document.getElementById("menu").rows;
+	let i=1;
+	while(i<filas.length){
+		total = total + parseFloat(filas[i].cells[4].innerHTML.replace("$",""));
+		i++;
+	}
+	col5.innerHTML = "$"+total;
+	row.appendChild(col5);
+	menu.appendChild(row);
+}
+
+function watchInputs(){
+	let menu = document.getElementById('menu');
+	menu.addEventListener("change", (event)=>{
+		var i = event.target.parentNode.parentNode.rowIndex;
+		columns = document.getElementById("menu").rows[i].cells;
+		columns[4].innerHTML = "$"+columns[3].children[0].value*parseFloat(columns[2].innerHTML.replace("$",""));
+		let total = 0;
+		let filas = document.getElementById("menu").rows;
+		i=1;
+		while(i<filas.length-1){
+		console.log(filas[i].cells[4])
+		total = total + parseFloat(filas[i].cells[4].innerHTML.replace("$",""));
+		i++;
+	}
+	filas[filas.length-1].cells[4].innerHTML = "$"+total;
+
 	});
 }
 
 function init(){
 	fetchInformation();
+	watchInputs();
 }
 
 init();
