@@ -303,3 +303,20 @@ form#carrito button{
 .hidden{
     display: none;
 }
+
+#login{
+    width: 100%;
+}
+
+footer {
+    background-color: rgb(255, 247, 232);
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+#menuDiv{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}

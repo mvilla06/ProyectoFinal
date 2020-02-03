@@ -1,4 +1,3 @@
-
 function displayResults(responseJSON){
     let sectionRestaurantes = document.getElementById("listaRestaurantes");
     sectionRestaurantes.innerHTML = ""; 
@@ -77,13 +76,9 @@ function displayDB(){
             }
         })
         .then(responseJSON => {
+            debugger;
             displayResults(responseJSON);
         });
-}
-
-
-function displayResults(responseJSON){
-
 }
 
 function init(){
