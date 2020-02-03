@@ -27,11 +27,14 @@ app.use(morgan('dev'));
 app.get('/api/buscarRestaurante/:text', (req, res)=>{
     let searchQuery = req.params.text;
     searchQuery = searchQuery.replace(/\+/g, ' ');
+    console.log(searchQuery);
     RestaurantesLista.buscar(searchQuery)
         .then((result)=>{
+            console.log(result)
             return res.status(200).json(result);
         })
         .catch((err)=>{
+            
             throw Error(err);
         });
 });

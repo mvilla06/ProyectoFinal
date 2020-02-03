@@ -54,7 +54,7 @@ let Restaurante = mongoose.Schema({
     }]
 });
 
-let Restaurantes = mongoose.model('restaurantes', Restaurante);
+let Restaurantes = mongoose.model('Restaurantes', Restaurante, 'Restaurantes');
 
 let RestaurantesLista = {
 	buscar : function(query){
@@ -98,7 +98,7 @@ let Usuario = mongoose.Schema({
     correo:String
 });
 
-let Usuarios = mongoose.model('usuarios', Usuario);
+let Usuarios = mongoose.model('Usuarios', Usuario);
 
 let UsuariosLista = {
     
@@ -126,7 +126,7 @@ let UsuariosLista = {
     }
 }
 
-let Perfiles = mongoose.model('perfiles', Perfil);
+let Perfiles = mongoose.model('Perfiles', Perfil);
 
 let PerfilesLista = {
     buscarCorreo:function(correo){
