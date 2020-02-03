@@ -1,5 +1,7 @@
 
 
+
+
 function watchSearch(){
     let buscar = $('#busqueda');
     $(buscar).on("submit", (event)=>{
@@ -50,7 +52,7 @@ function displayDB(){
             }
         })
         .then(responseJSON => {
-            console.log(responseJSON);
+            debugger;
             displayResults(responseJSON);
         });
 }

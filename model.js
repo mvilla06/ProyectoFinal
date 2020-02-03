@@ -76,15 +76,22 @@ let RestaurantesLista = {
 			});
 	},
 	getById : function(idParam){
-		console.log(idParam);
 		return Restaurantes.find({ id: idParam})
 			.then((result)=>{
-				console.log(result);
 				return result;
 			})
 			.catch((err)=>{
 				throw Error(err);
 			});
+	},
+	newRestaurant : function(restaurant){
+		return Restaurantes.create(restaurant)
+		.then((response)=>{
+			return restaurant;
+		})
+		.catch((err)=>{
+			throw Error(err);
+		})
 	}
 }
 
