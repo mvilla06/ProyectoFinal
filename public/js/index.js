@@ -41,13 +41,14 @@ function watchSearch(){
                 url: url,
                 dataType: "json",
                 success: function(responseJSON){
+
                     displayResults(responseJSON);
                 },
                 error: function(error){
                     throw error;
                 }
             })
-            console.log(url);
+            
 
         }
         $(busqueda).val("");
@@ -78,6 +79,11 @@ function displayDB(){
         .then(responseJSON => {
             displayResults(responseJSON);
         });
+}
+
+
+function displayResults(responseJSON){
+
 }
 
 function init(){

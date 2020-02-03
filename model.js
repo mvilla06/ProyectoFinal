@@ -2,6 +2,19 @@ let mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 
+let Perfil = mongoose.Schema({
+    correo:{
+        type:String,
+        required : true,
+        unique: true,
+    },
+    password:{
+        type:String,
+        required: true
+    },
+    tipo: String //usuario, restaurante, courier
+})
+
 let Restaurante = mongoose.Schema({
     nombre:{
         type:String
@@ -101,15 +114,20 @@ let Usuario = mongoose.Schema({
 
 let Usuarios = mongoose.model('usuarios', Usuario);
 
-let funcionesUsuario = {
-    buscar:function(){
-
-    },
+let UsuariosLista = {
+    
     ordenar:function(){
 
     },
-    historial:function(){
-
+    historial:function(correo){
+        return Usuarios.find({correo:correo})
+            .then(usuario=>{
+                if(usuario)
+                return usuario.pedidos
+            })
+            .catch(error=>{
+                throw error;
+            })
     },
     comentar:function(){
 
@@ -122,6 +140,24 @@ let funcionesUsuario = {
     }
 }
 
+let Perfiles = mongoose.model('perfiles', Perfil);
+
+let PerfilesLista = {
+    buscarCorreo:function(correo){
+        return Perfiles.find({corre:correo}).then(result=>{
+            if(result){
+                return result;
+            }
+        })
+        .catch(error=>{
+            throw error;
+        }  
+        )
+    }
+}
+
 module.exports = {
-	RestaurantesLista
+    RestaurantesLista,
+    UsuariosLista,
+    PerfilesLista
 };
