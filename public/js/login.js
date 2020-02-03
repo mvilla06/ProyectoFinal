@@ -19,8 +19,15 @@ function watchForm(){
                     }),
                     success:function(responseJSON){
                         localStorage.setItem('token', responseJSON.token);
-                        if(responseJSON.tipo=="usuario")
-                        window.location.href = './usuario/Home.html'
+                        if(responseJSON.tipo=="usuario"){
+                            window.location.href = './usuario/Home.html';
+                        }
+                        if(responseJSON.tipo=="restaurante"){
+                            window.location.href = './restaurante/restaurantHome.html';
+                            console.log(user);
+                            localStorage.setItem('user', user);
+
+                        }
                     },
                     error: function(error){
                         console.log( error);

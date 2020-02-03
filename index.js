@@ -50,7 +50,16 @@ app.get('/api/restauranteId/:id', (req, res)=>{
         });
 });
 
-
+app.get('/api/restauranteUser/:user', (req, res)=>{
+    let user = req.params.user;
+    RestaurantesLista.getByUser(user)
+        .then((result)=>{
+            return res.status(200).json(result);
+        })
+        .catch((err)=>{
+            throw Error(err);
+        });
+});
 
 app.get('/api/allRestaurants', (req, res)=>{
     
@@ -86,7 +95,6 @@ app.get('/api/historial', (req, res)=>{
             })
     })
 })
-
 
 app.post('/api/register', jsonParser, (req, res)=>{
     let user = req.body.user;
@@ -166,6 +174,17 @@ app.post('/api/newRestaurant/', jsonParser, (req, res) =>{
     RestaurantesLista.newRestaurant(restaurante)
     .then((response)=>{
         return res.status(201).json(restaurante);
+    })
+    .catch((err)=>{
+        throw Error(err);
+    });
+});
+
+app.put('/api/updateRestaurant/', jsonParser, (req, res) =>{
+    let restaurante = req.body;
+    RestaurantesLista.updateRestaurant(restaurante)
+    .then((response)=>{
+        return res.status(202).json(restaurante);
     })
     .catch((err)=>{
         throw Error(err);
