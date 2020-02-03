@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Tu restaurante</title>
+    <link href="./../../css/index.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+      <header>Tu restaurante</header>
+      <main>
+          <form id='newRestaurant'>
+            <label for="nombre">Nombre del restaurante: </label><br>
+            <input name='nombre' type="text"><br>
+            <label for="desc">Descripción del restaurante: </label><br>
+            <input name='desc' type="text"><br>
+            <label for="dir">Dirección del restaurante: </label><br>
+            <input name='dir' type="text"><br>
+            <label for="tel">Teléfono del restaurante: </label><br>
+            <input name='tel' type="tel"><br>
+            <label for="gen">Género del restaurante: </label><br>
+            <select name="gen">
+              <option value="burger">Hamburguesas</option>
+              <option value="pizza">Pizzas</option>
+              <option value="taco">Tacos</option>
+              <option value="wings">Alitas</option>
+            </select> <br>
+            <h5>Menú</h5>
+            <div id="menuDiv"> 
+                <table id="menuTable">
+                  <tr>
+                    <th>Producto</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                    <th>Eliminar</th>
+                  </tr>
+                </table>
+              </div>
+                <label for="platillo">Nombre del producto: </label><br>
+                <input name='platillo' id="platillo" type="text"><br>
+                <label for="descPlat">Descripción del producto: </label><br>
+                <input name='descPlat' id="descPlat" type="text"><br>
+                <label for="precio">Precio del producto: </label><br>
+                <input name='precio' id="precio" type="text"><br>
+                <button id="submitMenu">Agregar al menu</button>
+              <br>
+              <br>
+              <br>
+              <input type="submit" name="submitRestaurant" value="Actualizar información">
+          </form>
+      </main>
+      <script
+      src="https://code.jquery.com/jquery-3.4.1.js"
+      integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+      crossorigin="anonymous"></script> 
+    <script src="./js/editarRestaurante.js"></script>
+  </body>
+</html>
