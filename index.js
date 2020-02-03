@@ -76,11 +76,12 @@ app.get('/api/allRestaurants', (req, res)=>{
 
 app.get('/api/historial', (req, res)=>{
     let token = req.headers.authorization;
-
+    
     token = token.replace('Bearer ', '');
 
     jwt.verify(token, 'secret', (err, user)=>{
         if(err){
+            
             res.statusMessage = 'Token invalido';
             return res.status(400).send();
         }
@@ -146,7 +147,7 @@ app.post('/api/login', jsonParser, (req, res)=>{
                             user
                         };
                         let token = jwt.sign(data, 'secret', {
-                            expiresIn: 60 * 5
+                            expiresIn: 60 * 10
                         });
 
                         return res.status(200).json({ token, tipo:resultado[0].tipo });

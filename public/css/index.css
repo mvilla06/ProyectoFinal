@@ -116,32 +116,15 @@ button{
     
 }
 
-#detalles{
-    display: none;
-    position: absolute;
-    width: 50%;
-    height:30%;
-    left:25%;
-    top: 35%;
-    background-color: lightgray;
-    border: solid grey 3px;
-    border-radius: 20px;
-    text-align: center;
+.courier{
+   
+    text-align: justify;
     
-    flex-direction: column;
-    justify-content: center;
+    font-size: small;
+    font-style: italic;
 }
 
-#overlay{
-    width:100%;
-    height: 100%;
-    background-color: lightgray;
-    opacity: 50%;
-    margin: 0;
-    display:none;
-    position: fixed;
 
-}
 
 #datos button {
     margin-top: auto;
@@ -187,10 +170,7 @@ button{
     border-right: lightgray dashed 1px;
 }
 
-.status span:hover{
-    font-weight: bold;
-    cursor: pointer;
-}
+
 
  .precio span{
     text-align: center;
