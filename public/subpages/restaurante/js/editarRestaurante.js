@@ -84,6 +84,7 @@ function watchButtons(){
 		restaurante.direccion = event.target.dir.value;
 		restaurante.telefono = event.target.tel.value;
 		restaurante.genero = event.target.gen.value;
+		restaurante.correo = localStorage.getItem('user');
 		let url = '/api/updateRestaurant/';
 		let settings = {
 			method : "PUT",
@@ -95,8 +96,7 @@ function watchButtons(){
 		fetch(url, settings)
 			.then((response)=>{
 				if(response.ok){
-					console.log("success!");
-					return response.json();
+					window.location.href = "./../../../index.html";
 				}
 
 					throw new Error(response.statusText);

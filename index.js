@@ -182,6 +182,7 @@ app.post('/api/newRestaurant/', jsonParser, (req, res) =>{
 
 app.put('/api/updateRestaurant/', jsonParser, (req, res) =>{
     let restaurante = req.body;
+    console.log(restaurante);
     RestaurantesLista.updateRestaurant(restaurante)
     .then((response)=>{
         return res.status(202).json(restaurante);
