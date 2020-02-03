@@ -20,7 +20,6 @@ function watchButtons(){
 		row.appendChild(col4);
 		table.appendChild(row);
 		menu.push({producto:document.getElementById("platillo").value,descripcion:document.getElementById("descPlat").value,precio:document.getElementById("precio").value});
-		console.log(menu);
 	});
 	let table = document.getElementById('menuTable');
 	table.addEventListener('click', (event)=>{
@@ -29,6 +28,39 @@ function watchButtons(){
 			document.getElementById("menuTable").deleteRow(i);
 			menu.splice(i-1,1);
 		}
+	});
+	let newRestauranteForm = document.getElementById('newRestaurant');
+	newRestauranteForm.addEventListener('submit', (event)=>{
+		event.preventDefault();
+		restaurante = {};
+		restaurante.nombre = event.target.nombre.value;
+		restaurante.descripcion = event.target.desc.value;
+		restaurante.menu = menu;
+		restaurante.direccion = event.target.dir.value;
+		restaurante.telefono = event.target.tel.value;
+		restaurante.genero = event.target.gen.value;
+		restaurante.correo = event.target.mail.value;
+		console.log(restaurante);
+		let url = "/api/newRestaurant/";
+		let settings = {
+			method : "POST",
+			body : JSON.stringify(restaurante),
+			headers:{
+    			'Content-Type': 'application/json'
+  			}
+		}
+		fetch(url, settings)
+			.then((response)=>{
+				if(response.ok){
+					return response.json();
+				}
+
+					throw new Error(response.statusText);
+				})
+				.then((responseJSON)=>{
+					console.log("success!");
+					window.location.href = "./../../../index.html"
+				});
 	});
 }
 

@@ -52,7 +52,6 @@ function displayDB(){
             }
         })
         .then(responseJSON => {
-            debugger;
             displayResults(responseJSON);
         });
 }
