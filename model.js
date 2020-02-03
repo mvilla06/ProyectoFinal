@@ -1,4 +1,5 @@
 let mongoose = require('mongoose');
+let bcrypt = require('bcrypt');
 
 mongoose.Promise = global.Promise;
 
@@ -160,6 +161,14 @@ let PerfilesLista = {
             throw error;
         }  
         )
+    },
+    registrarRestaurante : function(user, pass){
+    	let passEnc = bcrypt.hash(pass, 10);
+    	let userDoc = {
+    		correo: user,
+    		password : passEnc,
+    		tipo : "Restaurante"
+    	}
     }
 }
 

@@ -40,11 +40,27 @@ function watchButtons(){
 		restaurante.telefono = event.target.tel.value;
 		restaurante.genero = event.target.gen.value;
 		restaurante.correo = event.target.mail.value;
-		console.log(restaurante);
+		restaurante.password = event.target.pass.value 
 		let url = "/api/newRestaurant/";
 		let settings = {
 			method : "POST",
 			body : JSON.stringify(restaurante),
+			headers:{
+    			'Content-Type': 'application/json'
+  			}
+		}
+		fetch(url, settings)
+			.then((response)=>{
+				if(response.ok){
+					return response.json();
+				}
+
+					throw new Error(response.statusText);
+				});
+		url = "/api/registraUserRestaurante/";
+		settings = {
+			method : "POST",
+			body : JSON.stringify({correo: restaurante.correo, password: restaurante.password}),
 			headers:{
     			'Content-Type': 'application/json'
   			}
