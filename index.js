@@ -28,7 +28,6 @@ app.use(morgan('dev'));
 app.get('/api/buscarRestaurante/:text', (req, res)=>{
     let searchQuery = req.params.text;
     searchQuery = searchQuery.replace(/\+/g, ' ');
-    console.log(searchQuery);
     RestaurantesLista.buscar(searchQuery)
         .then((result)=>{
             console.log(result)
@@ -89,8 +88,12 @@ app.get('/api/historial', (req, res)=>{
 app.post('/api/register', jsonParser, (req, res)=>{
     let user = req.body.user;
     let password = req.body.password;
+<<<<<<< HEAD
     let nombre = req.body.nombre;
     let direccion = req.body.direccion;
+=======
+    let tipo = req.body.tipo;
+>>>>>>> c7bad475dce48106fb82bf6216a75151adafbd4c
     bcrypt.hash(password, 10, (err, hash)=>{
         PerfilesLista.buscarCorreo(user)
             .then(resultado=>{
@@ -98,7 +101,7 @@ app.post('/api/register', jsonParser, (req, res)=>{
                     let obj = {
                         user:user,
                         password: hash,
-                        tipo: 'usuario'
+                        tipo: tipo
                     }
                     PerfilesLista.registrar(obj)
                         .then(result=>{
@@ -163,18 +166,6 @@ app.post('/api/newRestaurant/', jsonParser, (req, res) =>{
     RestaurantesLista.newRestaurant(restaurante)
     .then((response)=>{
         return res.status(201).json(restaurante);
-    })
-    .catch((err)=>{
-        throw Error(err);
-    });
-});
-
-app.post('/api/registraUserRestaurante/', jsonParser, (req, res) =>{
-    let user = req.body.correo;
-    let pass = req.body.password;
-    PerfilesLista.registrarRestaurante(user, pass)
-    .then((response)=>{
-        return res.status(201).json(user);
     })
     .catch((err)=>{
         throw Error(err);
