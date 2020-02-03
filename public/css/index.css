@@ -299,3 +299,7 @@ form#carrito button{
 #listaRestaurantes{
     width: 100%;
 }
+
+.hidden{
+    display: none;
+}

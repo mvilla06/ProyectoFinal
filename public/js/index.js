@@ -20,8 +20,10 @@ function displayResults(responseJSON){
         reviewDiv.innerHTML = avg;
         restDiv.appendChild(descDiv);
         restDiv.appendChild(reviewDiv);
-
-
+        let idLabel=document.createElement("label");
+        idLabel.className = "hidden";
+        idLabel.innerHTML = element.id;
+        restDiv.appendChild(idLabel);
     });
 }
 
@@ -52,6 +54,16 @@ function watchSearch(){
     });
 }
 
+function watchResults(){
+    let listaRestaurantes = document.getElementById("listaRestaurantes");
+    listaRestaurantes.addEventListener("click", (event)=>{
+        if(event.target.classList.contains("restaurante")){
+            localStorage.setItem("id",event.target.children[2].innerHTML);
+            window.location.href = "./subpages/restaurante/InfoRestaurante.html";
+        }
+    });
+}
+
 function displayDB(){
     let url = '/api/allRestaurants';
     let settings = {
@@ -71,6 +83,7 @@ function displayDB(){
 function init(){
     displayDB();
     watchSearch();
+    watchResults();
 }
 
 init();
