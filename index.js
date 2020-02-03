@@ -5,7 +5,7 @@ let mongoose = require('mongoose');
 let jwt = require('jsonwebtoken');
 let {DATABASE_URL, PORT} = require("./config");
 let {RestaurantesLista, UsuariosLista, PerfilesLista} = require("./model");
-
+let bcrypt = require('bcrypt');
 let jsonParser = bodyParser.json();
 
 let app = express();
@@ -34,7 +34,7 @@ app.get('/api/buscarRestaurante/:text', (req, res)=>{
             return res.status(200).json(result);
         })
         .catch((err)=>{
-            
+
             throw Error(err);
         });
 });
@@ -50,9 +50,7 @@ app.get('/api/restauranteId/:id', (req, res)=>{
         });
 });
 
-app.get('/api/historial', (req, res)=>{
-    
-})
+
 
 app.get('/api/allRestaurants', (req, res)=>{
     RestaurantesLista.getAll()
@@ -88,22 +86,32 @@ app.get('/api/historial', (req, res)=>{
 
 app.post('/api/login', jsonParser, (req, res)=>{
     let user = req.body.user;
-    let password = req.body.password;
+    bcrypt.hash(req.body.password, 10, (error, hash)=>{
+        
+            console.log(hash);
+            password = hash;
+        
+    });
+
     PerfilesLista.buscarCorreo(user)
         .then(resultado=>{
             if(resultado){
-                if(resultado.password === password){
-                    let data = {
-                        user
-                    };
-                    let token = jwt.sign(data, 'secret', {
-                        expiresIn: 60 * 5
-                    });
 
-                    return res.status(200).json({ token });
-                }else{
-                    return res.status(209).send();
-                }
+                bcrypt.compare(resultado.password, hash, function(error, res){
+                    if(res){
+                        let data = {
+                            user
+                        };
+                        let token = jwt.sign(data, 'secret', {
+                            expiresIn: 60 * 5
+                        });
+
+                        return res.status(200).json({ token });
+                    }else{
+                        return res.status(409).send();
+                    }
+                })
+                
                 
             }else{
                 return res.status(404).send();

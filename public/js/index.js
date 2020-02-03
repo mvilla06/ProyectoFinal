@@ -1,31 +1,4 @@
 
-function displayResults(responseJSON){
-    let sectionRestaurantes = document.getElementById("listaRestaurantes");
-    sectionRestaurantes.innerHTML = ""; 
-    responseJSON.forEach((element)=>{
-        let restDiv=document.createElement("div");
-        restDiv.className = "restaurante";
-        restDiv.innerHTML = element.nombre;
-        sectionRestaurantes.appendChild(restDiv);
-        let descDiv=document.createElement("div");
-        descDiv.className = "descripcion";
-        descDiv.innerHTML = element.descripcion;
-        let reviewDiv=document.createElement("div");
-        reviewDiv.className = "review";
-        let suma = 0;
-        element.review.forEach((calif)=>{
-            suma = suma + calif.calificacion;
-        });
-        let avg = suma/element.review.length;
-        reviewDiv.innerHTML = avg;
-        restDiv.appendChild(descDiv);
-        restDiv.appendChild(reviewDiv);
-        let idLabel=document.createElement("label");
-        idLabel.className = "hidden";
-        idLabel.innerHTML = element.id;
-        restDiv.appendChild(idLabel);
-    });
-}
 
 function watchSearch(){
     let buscar = $('#busqueda');
@@ -34,7 +7,7 @@ function watchSearch(){
 
         let busqueda = $('#busquedaTexto');
         
-        if($(busqueda).val()!="" && (/([a-z]|[A-Z]|[0-9])/.test($(busqueda).val()))){
+        if($(busqueda).val()!="" && (/([a-z]|[A-Z])/.test($(busqueda).val()))){
             let url = '/api/buscarRestaurante/'+$(busqueda).val().replace(/\s+/g, "+");
             $.ajax({
                 method: "GET", 
@@ -77,14 +50,41 @@ function displayDB(){
             }
         })
         .then(responseJSON => {
+            console.log(responseJSON);
             displayResults(responseJSON);
         });
 }
 
 
 function displayResults(responseJSON){
-
+    console.log('displayResults');
+    let sectionRestaurantes = document.getElementById("listaRestaurantes");
+    sectionRestaurantes.innerHTML = ""; 
+    responseJSON.forEach((element)=>{
+        let restDiv=document.createElement("div");
+        restDiv.className = "restaurante";
+        restDiv.innerHTML = element.nombre;
+        sectionRestaurantes.appendChild(restDiv);
+        let descDiv=document.createElement("div");
+        descDiv.className = "descripcion";
+        descDiv.innerHTML = element.descripcion;
+        let reviewDiv=document.createElement("div");
+        reviewDiv.className = "review";
+        let suma = 0;
+        element.review.forEach((calif)=>{
+            suma = suma + calif.calificacion;
+        });
+        let avg = suma/element.review.length;
+        reviewDiv.innerHTML = avg;
+        restDiv.appendChild(descDiv);
+        restDiv.appendChild(reviewDiv);
+        let idLabel=document.createElement("label");
+        idLabel.className = "hidden";
+        idLabel.innerHTML = element.id;
+        restDiv.appendChild(idLabel);
+    });
 }
+
 
 function init(){
     displayDB();

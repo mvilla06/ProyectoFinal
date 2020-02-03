@@ -112,7 +112,7 @@ let Usuario = mongoose.Schema({
     correo:String
 });
 
-let Usuarios = mongoose.model('Usuarios', Usuario);
+let Usuarios = mongoose.model('Usuarios', Usuario, 'Usuarios');
 
 let UsuariosLista = {
     
@@ -140,11 +140,12 @@ let UsuariosLista = {
     }
 }
 
-let Perfiles = mongoose.model('Perfiles', Perfil);
+let Perfiles = mongoose.model('Perfiles', Perfil, 'Perfiles');
 
 let PerfilesLista = {
     buscarCorreo:function(correo){
-        return Perfiles.find({corre:correo}).then(result=>{
+        return Perfiles.find({correo:correo})
+        .then(result=>{
             if(result){
                 return result;
             }
