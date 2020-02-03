@@ -1,4 +1,4 @@
-function init(){
+function getOrders(){
     token = localStorage.getItem('token');
     $.ajax({
         method:"GET",
@@ -16,6 +16,8 @@ function init(){
             window.location.href = "../login.html"
         }
     })
+
+    
 }
 
 function displayResults(responseJSON){
@@ -40,8 +42,12 @@ function displayResults(responseJSON){
                 let rest = document.createElement('div');
                 $(rest).attr('class', 'restOrigen');
                 $(rest).text(current.restaurante);
+
+                let courier = document.createElement('div');
+                $(courier).attr('class', 'courier');
+                $(courier).text('Repartidor: '+current.repartidor);
                 
-                $(descripcion).append(producto, rest);
+                $(descripcion).append(producto, rest, courier);
 
                 let precio = document.createElement('div');
                 $(precio).attr('class', 'precio');
@@ -54,6 +60,7 @@ function displayResults(responseJSON){
                 $(sts).attr('class', 'status');
                 let statusMsg = document.createElement('span');
                 $(statusMsg).text(current.status);
+                $(statusMsg).attr('id', 'mensaje');
                 let codigo = document.createElement('p');
                 $(codigo).text(current.confirmacion);
                 $(sts).append(statusMsg, codigo);
@@ -64,6 +71,13 @@ function displayResults(responseJSON){
         }
     )
     }
+}
+
+
+
+function init(){
+    getOrders();
+    
 }
 
 init();
