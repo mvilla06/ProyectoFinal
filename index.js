@@ -53,12 +53,15 @@ app.get('/api/restauranteId/:id', (req, res)=>{
 
 
 app.get('/api/allRestaurants', (req, res)=>{
+    
     RestaurantesLista.getAll()
         .then((result)=>{
+            console.log(result)
             return res.status(200).json(result);
         })
         .catch((err)=>{
-            throw Error(err);
+            console.log( Error(err));
+            return res.status(500).send();
         });
 });
 

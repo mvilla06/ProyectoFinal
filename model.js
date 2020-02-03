@@ -54,7 +54,7 @@ let Restaurante = mongoose.Schema({
     }]
 });
 
-let Restaurantes = mongoose.model('Restaurantes', Restaurante);
+let Restaurantes = mongoose.model('Restaurantes', Restaurante, 'Restaurantes');
 
 let RestaurantesLista = {
 	getAll : function(){
