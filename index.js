@@ -88,12 +88,9 @@ app.get('/api/historial', (req, res)=>{
 app.post('/api/register', jsonParser, (req, res)=>{
     let user = req.body.user;
     let password = req.body.password;
-<<<<<<< HEAD
     let nombre = req.body.nombre;
     let direccion = req.body.direccion;
-=======
     let tipo = req.body.tipo;
->>>>>>> c7bad475dce48106fb82bf6216a75151adafbd4c
     bcrypt.hash(password, 10, (err, hash)=>{
         PerfilesLista.buscarCorreo(user)
             .then(resultado=>{
