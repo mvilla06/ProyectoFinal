@@ -84,21 +84,44 @@ app.get('/api/historial', (req, res)=>{
 })
 
 
-app.post('/api/login', jsonParser, (req, res)=>{
+app.post('/api/register', jsonParser, (req, res)=>{
     let user = req.body.user;
-    bcrypt.hash(req.body.password, 10, (error, hash)=>{
-        
-            console.log(hash);
-            password = hash;
-        
-    });
+    let password = req.body.password;
+
+    bcrypt.hash(password, 10, (err, hash)=>{
+        PerfilesLista.buscarCorreo(user)
+            .then(resultado=>{
+                if(resultado.length==0){
+                    let obj = {
+                        user:user,
+                        password: hash,
+                        tipo: 'usuario'
+                    }
+                    PerfilesLista.registrar(obj)
+                        .then(result=>{
+                            console.log(result);
+                            return res.status(200).json(result);
+                        })
+                }else{
+                    return res.status(406).send();
+                }
+            })
+    })
+})
+
+app.post('/api/login', jsonParser, (req, res)=>{
+    console.log('hola')
+    let user = req.body.user;
+    let password=req.body.password;
+    
 
     PerfilesLista.buscarCorreo(user)
         .then(resultado=>{
-            if(resultado){
-
-                bcrypt.compare(resultado.password, hash, function(error, res){
-                    if(res){
+            if(resultado.length>0){
+                console.log(resultado);
+                bcrypt.compare(password,resultado[0].password, function(error, response){
+                    console.log(response)
+                    if(response){
                         let data = {
                             user
                         };
@@ -106,7 +129,7 @@ app.post('/api/login', jsonParser, (req, res)=>{
                             expiresIn: 60 * 5
                         });
 
-                        return res.status(200).json({ token });
+                        return res.status(200).json({ token, tipo:resultado[0].tipo });
                     }else{
                         return res.status(409).send();
                     }
@@ -118,6 +141,7 @@ app.post('/api/login', jsonParser, (req, res)=>{
             }
         })
         .catch(error=>{
+            console.log(error);
             return res.status(500).send();
         });
 })

@@ -161,6 +161,14 @@ let PerfilesLista = {
             throw error;
         }  
         )
+    },
+    registrar:function(obj){
+        return Perfiles.create({correo:obj.user, password:obj.password, tipo: obj.tipo}).then(nuevo=>{
+            return nuevo;
+        })
+        .catch(error=>{
+            throw error;
+        })
     }
 }
 

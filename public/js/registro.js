@@ -1,7 +1,7 @@
 
 
 function watchForm(){
-    let form = $("#login");
+    let form = $("#registro");
     $(form).on('submit', (event)=>{
         event.preventDefault();
         let user = $("#user").val();
@@ -10,7 +10,7 @@ function watchForm(){
             if ((/([a-z]|[A-Z]|[0-9])\@([a-z])*.com/).test(user)){
                 $.ajax({
                     method:"POST",
-                    url: "/api/login",
+                    url: "/api/register",
                     contentType:"application/json",
                     dataType:'json',
                     data:JSON.stringify({
@@ -18,9 +18,7 @@ function watchForm(){
                         password: password
                     }),
                     success:function(responseJSON){
-                        localStorage.setItem('token', responseJSON.token);
-                        if(responseJSON.tipo=="usuario")
-                        window.location.href = './usuario/Home.html'
+                        console.log(responseJSON);
                     },
                     error: function(error){
                         console.log( error);
