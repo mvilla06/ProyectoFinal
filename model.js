@@ -55,7 +55,7 @@ let Restaurante = mongoose.Schema({
     }]
 });
 
-let Restaurantes = mongoose.model('restaurantes', Restaurante);
+let Restaurantes = mongoose.model('Restaurantes', Restaurante, 'Restaurantes');
 
 let RestaurantesLista = {
 	getAll : function(){
@@ -120,7 +120,7 @@ let Usuario = mongoose.Schema({
     correo:String
 });
 
-let Usuarios = mongoose.model('usuarios', Usuario);
+let Usuarios = mongoose.model('Usuarios', Usuario, 'Usuarios');
 
 let UsuariosLista = {
     
@@ -148,11 +148,12 @@ let UsuariosLista = {
     }
 }
 
-let Perfiles = mongoose.model('perfiles', Perfil);
+let Perfiles = mongoose.model('Perfiles', Perfil, 'Perfiles');
 
 let PerfilesLista = {
     buscarCorreo:function(correo){
-        return Perfiles.find({corre:correo}).then(result=>{
+        return Perfiles.find({correo:correo})
+        .then(result=>{
             if(result){
                 return result;
             }
@@ -162,13 +163,13 @@ let PerfilesLista = {
         }  
         )
     },
-    registrarRestaurante : function(user, pass){
-    	let passEnc = bcrypt.hash(pass, 10);
-    	let userDoc = {
-    		correo: user,
-    		password : passEnc,
-    		tipo : "Restaurante"
-    	}
+    registrar:function(obj){
+        return Perfiles.create({correo:obj.user, password:obj.password, tipo: obj.tipo}).then(nuevo=>{
+            return nuevo;
+        })
+        .catch(error=>{
+            throw error;
+        })
     }
 }
 

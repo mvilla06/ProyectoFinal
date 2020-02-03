@@ -6,7 +6,7 @@ let jwt = require('jsonwebtoken');
 let uuid = require('uuid');
 let {DATABASE_URL, PORT} = require("./config");
 let {RestaurantesLista, UsuariosLista, PerfilesLista} = require("./model");
-
+let bcrypt = require('bcrypt');
 let jsonParser = bodyParser.json();
 
 let app = express();
@@ -28,11 +28,14 @@ app.use(morgan('dev'));
 app.get('/api/buscarRestaurante/:text', (req, res)=>{
     let searchQuery = req.params.text;
     searchQuery = searchQuery.replace(/\+/g, ' ');
+    console.log(searchQuery);
     RestaurantesLista.buscar(searchQuery)
         .then((result)=>{
+            console.log(result)
             return res.status(200).json(result);
         })
         .catch((err)=>{
+
             throw Error(err);
         });
 });
@@ -48,9 +51,7 @@ app.get('/api/restauranteId/:id', (req, res)=>{
         });
 });
 
-app.get('/api/historial', (req, res)=>{
-    
-})
+
 
 app.get('/api/allRestaurants', (req, res)=>{
     RestaurantesLista.getAll()
@@ -84,30 +85,64 @@ app.get('/api/historial', (req, res)=>{
 })
 
 
-app.post('/api/login', jsonParser, (req, res)=>{
+app.post('/api/register', jsonParser, (req, res)=>{
     let user = req.body.user;
     let password = req.body.password;
+
+    bcrypt.hash(password, 10, (err, hash)=>{
+        PerfilesLista.buscarCorreo(user)
+            .then(resultado=>{
+                if(resultado.length==0){
+                    let obj = {
+                        user:user,
+                        password: hash,
+                        tipo: 'usuario'
+                    }
+                    PerfilesLista.registrar(obj)
+                        .then(result=>{
+                            console.log(result);
+                            return res.status(200).json(result);
+                        })
+                }else{
+                    return res.status(406).send();
+                }
+            })
+    })
+})
+
+app.post('/api/login', jsonParser, (req, res)=>{
+    console.log('hola')
+    let user = req.body.user;
+    let password=req.body.password;
+    
+
     PerfilesLista.buscarCorreo(user)
         .then(resultado=>{
-            if(resultado){
-                if(resultado.password === password){
-                    let data = {
-                        user
-                    };
-                    let token = jwt.sign(data, 'secret', {
-                        expiresIn: 60 * 5
-                    });
+            if(resultado.length>0){
+                console.log(resultado);
+                bcrypt.compare(password,resultado[0].password, function(error, response){
+                    console.log(response)
+                    if(response){
+                        let data = {
+                            user
+                        };
+                        let token = jwt.sign(data, 'secret', {
+                            expiresIn: 60 * 5
+                        });
 
-                    return res.status(200).json({ token });
-                }else{
-                    return res.status(209).send();
-                }
+                        return res.status(200).json({ token, tipo:resultado[0].tipo });
+                    }else{
+                        return res.status(409).send();
+                    }
+                })
+                
                 
             }else{
                 return res.status(404).send();
             }
         })
         .catch(error=>{
+            console.log(error);
             return res.status(500).send();
         });
 });
