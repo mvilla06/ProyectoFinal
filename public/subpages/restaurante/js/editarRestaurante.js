@@ -1,3 +1,48 @@
+function getRestaurantInfo(){
+	let url = '/api/restauranteUser/'+localStorage.getItem('user');
+    let settings = {
+        method : "GET"
+    }
+    fetch(url, settings)
+        .then(response => {
+            if(response.ok){
+                return response.json();
+            }
+        })
+        .then(responseJSON => {
+            loadResults(responseJSON);
+        });
+}
+
+function loadResults(responseJSON){
+	let newRestauranteForm = document.getElementById('newRestaurant');
+	newRestauranteForm.nombre.value = responseJSON[0].nombre;
+	newRestauranteForm.desc.value = responseJSON[0].descripcion;
+	menu = responseJSON[0].menu;
+	newRestauranteForm.dir.value = responseJSON[0].direccion;
+	newRestauranteForm.tel.value = responseJSON[0].telefono;
+	newRestauranteForm.gen.value = responseJSON[0].genero;
+	let table = document.getElementById('menuTable');
+	menu.forEach((element)=>{
+		let row = document.createElement('tr');
+		let col1 = document.createElement('td');
+		let col2 = document.createElement('td');
+		let col3 = document.createElement('td');
+		let col4 = document.createElement('td');
+		let delBtn = document.createElement('button');
+		col1.innerHTML = element.producto;
+		row.appendChild(col1);
+		col2.innerHTML = element.descripcion;
+		row.appendChild(col2);
+		col3.innerHTML = element.precio;
+		row.appendChild(col3);
+		delBtn.innerHTML = "Eliminar";
+		col4.appendChild(delBtn);
+		row.appendChild(col4);
+		table.appendChild(row);
+	});
+}
+
 function watchButtons(){
 	let menuAdd = document.getElementById('submitMenu');
 	menuAdd.addEventListener('click', (event)=>{
@@ -39,11 +84,10 @@ function watchButtons(){
 		restaurante.direccion = event.target.dir.value;
 		restaurante.telefono = event.target.tel.value;
 		restaurante.genero = event.target.gen.value;
-		restaurante.correo = event.target.mail.value;
-		restaurante.password = event.target.pass.value 
-		let url = "/api/newRestaurant/";
+		restaurante.correo = localStorage.getItem('user');
+		let url = '/api/updateRestaurant/';
 		let settings = {
-			method : "POST",
+			method : "PUT",
 			body : JSON.stringify(restaurante),
 			headers:{
     			'Content-Type': 'application/json'
@@ -52,30 +96,16 @@ function watchButtons(){
 		fetch(url, settings)
 			.then((response)=>{
 				if(response.ok){
-					return response.json();
+					window.location.href = "./../../../index.html";
 				}
 
-					throw new Error(response.statusText);
-				});
-		url = "/api/register";
-		settings = {
-			method : "POST",
-			body : JSON.stringify({user: restaurante.correo, password: restaurante.password, tipo: "restaurante"}),
-			headers:{
-    			'Content-Type': 'application/json'
-  			}
-		}
-		fetch(url, settings)
-			.then((response)=>{
-				if(response.ok){
-					window.location.href = "./../../../index.html"
-				}
 					throw new Error(response.statusText);
 				});
 	});
 }
 
 function init(){
+	getRestaurantInfo();
 	watchButtons();
 }
 

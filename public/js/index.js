@@ -55,7 +55,6 @@ function displayDB(){
 
 
 function displayResults(responseJSON){
-    console.log(responseJSON);
     let sectionRestaurantes = document.getElementById("listaRestaurantes");
     sectionRestaurantes.innerHTML = ""; 
     responseJSON.forEach((element)=>{

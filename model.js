@@ -93,6 +93,24 @@ let RestaurantesLista = {
 		.catch((err)=>{
 			throw Error(err);
 		})
+	},
+	getByUser : function(correoParam){
+		return Restaurantes.find({ correo: correoParam})
+			.then((result)=>{
+				return result;
+			})
+			.catch((err)=>{
+				throw Error(err);
+			});
+	},
+	updateRestaurant : function(restaurant){
+		return Restaurantes.update({correo: restaurant.correo}, restaurant)
+			.then((result)=>{
+				return restaurant;
+			})
+			.catch((err)=>{
+				throw Error(err);
+			});
 	}
 }
 
