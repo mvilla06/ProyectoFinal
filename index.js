@@ -73,7 +73,8 @@ app.get('/api/historial', (req, res)=>{
             res.statusMessage = 'Token invalido';
             return res.status(400).send();
         }
-        UsuariosLista.historial(user)
+        
+        UsuariosLista.historial(user.user)
             .then(historial=>{
                 return res.status(200).json(historial);
             })
@@ -88,7 +89,8 @@ app.get('/api/historial', (req, res)=>{
 app.post('/api/register', jsonParser, (req, res)=>{
     let user = req.body.user;
     let password = req.body.password;
-
+    let nombre = req.body.nombre;
+    let direccion = req.body.direccion;
     bcrypt.hash(password, 10, (err, hash)=>{
         PerfilesLista.buscarCorreo(user)
             .then(resultado=>{
@@ -102,7 +104,13 @@ app.post('/api/register', jsonParser, (req, res)=>{
                         .then(result=>{
                             console.log(result);
                             return res.status(200).json(result);
-                        })
+                        });
+                    obj = {
+                        nombre: nombre,
+                        direccion: direccion,
+                        correo: user
+                    }
+                    UsuariosLista.nuevo(obj);
                 }else{
                     return res.status(406).send();
                 }
