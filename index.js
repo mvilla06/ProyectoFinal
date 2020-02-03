@@ -4,6 +4,7 @@ let bodyParser = require('body-parser');
 let mongoose = require('mongoose');
 let jwt = require('jsonwebtoken');
 let {DATABASE_URL, PORT} = require("./config");
+let {RestaurantesLista} = require("./model");
 
 let jsonParser = bodyParser.json();
 
@@ -24,8 +25,14 @@ app.use(morgan('dev'));
 
 
 app.get('/api/buscarRestaurante/:text', (req, res)=>{
-    let text = req.params.text;
-    return res.status(200).json({nombre:text});
+    let searchQuery = req.params.text;
+    RestaurantesLista.buscar(searchQuery)
+        .then((result)=>{
+            return res.status(200).json(result);
+        })
+        .catch((err)=>{
+            throw Error(err);
+        });
 });
 
 app.get('/api/historial', (req, res)=>{
