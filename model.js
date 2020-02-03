@@ -44,6 +44,15 @@ let Restaurante = mongoose.Schema({
 let Restaurantes = mongoose.model('restaurantes', Restaurante);
 
 let RestaurantesLista = {
+	getAll : function(){
+		return Restaurantes.find()
+			.then((result)=>{
+				return result;
+			})
+			.catch((err)=>{
+				throw Error(err);
+			});
+	},
 	buscar : function(query){
 		return Restaurantes.find({ nombre: { $regex: query, $options: "i" } })
 			.then((result)=>{
@@ -53,11 +62,16 @@ let RestaurantesLista = {
 				throw Error(err);
 			});
 	},
-	getById : function(id){
-
-	},
-	getAvgReview : function(id){
-
+	getById : function(idParam){
+		console.log(idParam);
+		return Restaurantes.find({ id: idParam})
+			.then((result)=>{
+				console.log(result);
+				return result;
+			})
+			.catch((err)=>{
+				throw Error(err);
+			});
 	}
 }
 

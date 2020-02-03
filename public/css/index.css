@@ -295,3 +295,7 @@ form#carrito button{
     margin-top: auto;
     margin-left: auto;
 }
+
+#listaRestaurantes{
+    width: 100%;
+}
