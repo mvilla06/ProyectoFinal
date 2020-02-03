@@ -13,18 +13,24 @@ function watchSearch(){
                 dataType: "json",
                 success: function(responseJSON){
                     console.log(responseJSON);
+                    displayResults(responseJSON);
                 },
                 error: function(error){
                     throw error;
                 }
             })
-            console.log(url);
+            
 
         }
         $(busqueda).val("");
     });
 }
 
+
+
+function displayResults(responseJSON){
+
+}
 
 function init(){
     watchSearch();
