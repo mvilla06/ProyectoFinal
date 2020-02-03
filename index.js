@@ -36,6 +36,30 @@ app.get('/api/buscarRestaurante/:text', (req, res)=>{
         });
 });
 
+app.get('/api/restauranteId/:id', (req, res)=>{
+    let searchId = req.params.id;
+    RestaurantesLista.getById(searchId)
+        .then((result)=>{
+            return res.status(200).json(result);
+        })
+        .catch((err)=>{
+            throw Error(err);
+        });
+});
+
+app.get('/api/historial', (req, res)=>{
+    
+})
+
+app.get('/api/allRestaurants', (req, res)=>{
+    RestaurantesLista.getAll()
+        .then((result)=>{
+            return res.status(200).json(result);
+        })
+        .catch((err)=>{
+            throw Error(err);
+        });
+});
 
 app.get('/api/historial', (req, res)=>{
     let token = req.headers.authorization;
