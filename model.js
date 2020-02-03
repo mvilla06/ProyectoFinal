@@ -1,4 +1,5 @@
 let mongoose = require('mongoose');
+let bcrypt = require('bcrypt');
 
 mongoose.Promise = global.Promise;
 
