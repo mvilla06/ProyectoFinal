@@ -3,6 +3,7 @@ let morgan = require('morgan');
 let bodyParser = require('body-parser');
 let mongoose = require('mongoose');
 let jwt = require('jsonwebtoken');
+let uuid = require('uuid');
 let {DATABASE_URL, PORT} = require("./config");
 let {RestaurantesLista, UsuariosLista, PerfilesLista} = require("./model");
 let bcrypt = require('bcrypt');
@@ -144,7 +145,21 @@ app.post('/api/login', jsonParser, (req, res)=>{
             console.log(error);
             return res.status(500).send();
         });
-})
+});
+
+app.post('/api/newRestaurant/', jsonParser, (req, res) =>{
+    let restaurante = req.body;
+    restaurante.id = uuid.v4();
+    restaurante.review = [];
+    restaurante.ordenes=[];
+    RestaurantesLista.newRestaurant(restaurante)
+    .then((response)=>{
+        return res.status(201).json(restaurante);
+    })
+    .catch((err)=>{
+        throw Error(err);
+    });
+});
 
 
 
