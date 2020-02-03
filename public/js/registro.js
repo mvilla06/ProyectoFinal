@@ -15,7 +15,8 @@ function watchForm(){
                     dataType:'json',
                     data:JSON.stringify({
                         user: user,
-                        password: password
+                        password: password,
+                        tipo: usuario
                     }),
                     success:function(responseJSON){
                         console.log(responseJSON);
