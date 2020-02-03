@@ -57,10 +57,10 @@ function watchButtons(){
 
 					throw new Error(response.statusText);
 				});
-		url = "/api/registraUserRestaurante/";
+		url = "/api/register";
 		settings = {
 			method : "POST",
-			body : JSON.stringify({correo: restaurante.correo, password: restaurante.password}),
+			body : JSON.stringify({user: restaurante.correo, password: restaurante.password, tipo: "restaurante"}),
 			headers:{
     			'Content-Type': 'application/json'
   			}
@@ -70,11 +70,9 @@ function watchButtons(){
 				if(response.ok){
 					return response.json();
 				}
-
 					throw new Error(response.statusText);
 				})
 				.then((responseJSON)=>{
-					console.log("success!");
 					window.location.href = "./../../../index.html"
 				});
 	});
