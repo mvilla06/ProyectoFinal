@@ -34,8 +34,7 @@ let Restaurante = mongoose.Schema({
         precio: Number
     }],
     direccion:{
-        calle:String, 
-        numero:Number
+        type:String
     },
     telefono:Number,
     review:[{
@@ -55,7 +54,7 @@ let Restaurante = mongoose.Schema({
     }]
 });
 
-let Restaurantes = mongoose.model('Restaurantes', Restaurante, 'Restaurantes');
+let Restaurantes = mongoose.model('Restaurantes', Restaurante);
 
 let RestaurantesLista = {
 	getAll : function(){
@@ -86,6 +85,7 @@ let RestaurantesLista = {
 			});
 	},
 	newRestaurant : function(restaurant){
+		console.log(restaurant);
 		return Restaurantes.create(restaurant)
 		.then((response)=>{
 			return restaurant;

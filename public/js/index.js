@@ -1,7 +1,3 @@
-
-
-
-
 function watchSearch(){
     let buscar = $('#busqueda');
     $(buscar).on("submit", (event)=>{
@@ -58,7 +54,6 @@ function displayDB(){
 
 
 function displayResults(responseJSON){
-    console.log('displayResults');
     let sectionRestaurantes = document.getElementById("listaRestaurantes");
     sectionRestaurantes.innerHTML = ""; 
     responseJSON.forEach((element)=>{
