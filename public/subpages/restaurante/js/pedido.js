@@ -11,6 +11,8 @@ function fetchInformation(){
             }
         })
         .then(responseJSON => {
+			console.log(responseJSON);
+			localStorage.setItem('response', JSON.stringify(responseJSON));
             displayInformation(responseJSON);
         });
 }
@@ -112,10 +114,65 @@ function watchInputs(){
 	filas[filas.length-1].cells[4].innerHTML = "$"+total;
 
 	});
+
+	
+	
 	let botonOrdenar = document.getElementById('ordenar');
 	botonOrdenar.addEventListener('click', (event)=>{
 		event.preventDefault();
+		let responseJSON = JSON.parse(localStorage.getItem('response'));
+		console.log(responseJSON)
 		localStorage.setItem('pedido', document.getElementById("menu"));
+		let correo = responseJSON[0].correo;
+		let nombre = responseJSON[0].nombre;
+		let articulos = [];
+		for (let i=1; i<responseJSON[0].menu.length+1; i++){
+			let col = document.getElementById('menu').rows[i].cells;
+			let cantidad = col[3].children[0].value;
+			console.log(cantidad);
+			if(cantidad>0){
+				
+				let obj = {
+					nombre: col[0].innerHTML,
+					cantidad: cantidad
+				}
+				articulos.push(obj)
+			}
+		}
+
+		let total = document.getElementById('menu').rows[responseJSON[0].menu.length+1].cells[4].innerHTML;
+		total = total.replace('$', '');
+
+		if(articulos.length>0){
+			let data = {
+				restaurante: correo,
+				restauranteNombre: nombre,
+				articulos: articulos,
+				total: total
+			}
+			console.log(data);
+
+			$.ajax({
+				method:"POST",
+				url: "/api/newOrder",
+				contentType: 'application/json',
+				headers:{
+					authorization:'Bearer '+localStorage.getItem('token')
+				},
+				data: JSON.stringify(data),
+				success:(
+					function(){
+						window.location.href = './usuario/Home.html';
+					}
+				),
+				error:(error=>{
+					if(error.status==400){
+						window.location.href = './login.html'
+					}
+				})
+			})
+		}
+		
 
 	});
 }

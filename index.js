@@ -290,34 +290,76 @@ app.post('/api/newRestaurant/', jsonParser, (req, res) =>{
     });
 });
 
-app.post('/api/newOrder/', jsonParser, (req, res) =>{
-    let correoRestaurante = req.body.restaurante;
-    RestaurantesLista.obtenerPedidos(correoRestaurante)
-    .then((response)=>{
-        let direccion = req.body.cliente;
-        let id = uuid.v4();
-        let timestamp = new Date();
-        let articulos = req.body.articulos;
-        let status = "Ordenado";
-        let pedido = {
-            id,
-            timestamp,
-            direccion,
-            articulos,
-            status
+app.post('/api/newOrder/', jsonParser, (req, res) => {
+    console.log(req.body)
+    let token = req.headers.authorization;
+
+
+    token = token.replace('Bearer ', '');
+
+    jwt.verify(token, 'secret', (err, user) => {
+        if (err) {
+
+            res.statusMessage = 'Token invalido';
+            return res.status(400).send();
         }
-        response[0].ordenes.push(pedido);
-        RestaurantesLista.colocarPedido(correoRestaurante, response[0].ordenes)
-        .then((response)=>{
-            return res.status(201).json(pedido);
-        })
-        .catch((err)=>{
-            throw Error(err);
-        });
+
+        let correoRestaurante = req.body.restaurante;
+        RestaurantesLista.obtenerPedidos(correoRestaurante)
+            .then((response) => {
+                let direccion;
+                UsuariosLista.perfil(user.user).then(perfil=>{
+                    console.log(perfil);
+                    direccion = perfil[0].direccion.calle+' '+perfil[0].direccion.numero;
+                    console.log(direccion)
+                })
+                .catch(err=>{
+                    throw Error(err);
+                });
+                console.log(direccion);
+                let id = uuid.v4();
+                let timestamp = new Date();
+                let articulos = req.body.articulos;
+                let status = "Ordenado";
+                let pedido = {
+                    id,
+                    timestamp,
+                    direccion,
+                    articulos,
+                    status
+                }
+                response[0].ordenes.push(pedido);
+                RestaurantesLista.colocarPedido(correoRestaurante, response[0].ordenes)
+                    .then((response) => {
+                        let articulos = [];
+                        for (let i=0; i<req.body.articulos.length;i++){
+                            articulos.push(req.body.articulos[i].nombre)
+                        }
+                        let obj = {
+                            articulos:articulos,
+                            restaurante: req.body.restauranteNombre,
+                            total: req.body.total,
+                            status: "Recibido",
+                            confirmacion: uuid.v4()
+                        }
+
+                        UsuariosLista.ordenar(user.user, obj)
+                        .then(nuevo=>{
+                            return res.status(201).json(nuevo);
+                        })
+                        .catch (err=>{
+                            console.log(err);
+                        })
+                        
+                    })
+                    .catch((err) => {
+                        throw Error(err);
+                    });
+            })
+            .catch((err) => {
+                throw Error(err);
+            });
     })
-    .catch((err)=>{
-        throw Error(err);
-    });
 });
 
 app.put('/api/updateRestaurant/', jsonParser, (req, res) =>{

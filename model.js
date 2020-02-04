@@ -166,8 +166,13 @@ let Usuarios = mongoose.model('Usuarios', Usuario, 'Usuarios');
 
 let UsuariosLista = {
     
-    ordenar:function(){
-
+    ordenar:function(user,obj){
+        return Usuarios.findOneAndUpdate({correo:user}, {$push:{pedidos:obj}}, {new: true}).then(nuevo=>{
+            return nuevo;
+        })
+        .catch(error=>{
+            throw error;
+        })
     },
     historial:function(correo){
         return Usuarios.find({correo:correo})
