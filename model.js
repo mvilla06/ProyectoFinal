@@ -172,7 +172,7 @@ let UsuariosLista = {
     historial:function(correo){
         return Usuarios.find({correo:correo})
             .then(usuario=>{
-                if(usuario)
+                
                 return usuario
             })
             .catch(error=>{
@@ -182,11 +182,22 @@ let UsuariosLista = {
     comentar:function(){
 
     }, 
-    editar:function(){
-
+    perfil:function(correo){
+        return Usuarios.find({correo:correo})
+            .then(usuario=>{
+                return usuario;
+            })
+            .catch(error=>{
+                throw error;
+            })
     },
     confirmar:function(){
         
+    },
+    actualizar:function(correo, obj){
+        return Usuarios.findOneAndUpdate({correo:correo}, {correo:obj.correo, nombre:obj.nombre,direccion:obj.direccion },{omitUndefined:true, new:true})
+        .then(nuevo=>{return nuevo})
+        .catch(error=>{throw error})
     },
     nuevo:function(obj){
         return Usuarios.create({
@@ -226,6 +237,13 @@ let PerfilesLista = {
         .catch(error=>{
             throw error;
         })
+    },
+    actualizar:function(correo, obj){
+        return Perfiles.findOneAndUpdate({correo:correo}, {correo:obj.correo, password: obj.password}, {omitUndefined:true, new:true}).then(
+            nuevo=>{return nuevo}
+        ).catch(
+            error=>{throw error}
+        )
     }
 }
 

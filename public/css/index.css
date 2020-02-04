@@ -65,7 +65,7 @@ nav>*, #login{
     align-items: center;
 }
 
-#datos{
+.perfil{
     width:70%;
    justify-self: stretch;
    text-align: justify;
@@ -126,7 +126,7 @@ button{
 
 
 
-#datos button {
+.perfil button {
     margin-top: auto;
     margin-left:auto;
     

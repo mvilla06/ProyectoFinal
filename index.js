@@ -119,6 +119,98 @@ app.get('/api/historial', (req, res)=>{
     })
 })
 
+app.get('/api/perfil', (req, res)=>{
+    let token = req.headers.authorization;
+    token = token.replace('Bearer ', '');
+
+    jwt.verify(token, 'secret', (err, user)=>{
+        if(err){
+            
+            res.statusMessage = 'Token invalido';
+            return res.status(400).send();
+        }
+        
+        UsuariosLista.perfil(user.user)
+            .then(usuario=>{
+                usuario = usuario[0];
+                let perfil={
+                    nombre:usuario.nombre,
+                    direccion:usuario.direccion,
+                    correo:usuario.correo
+                }
+                return res.status(200).json(perfil);
+            })
+            .catch(error=>{
+                console.log(error);
+                return res.status(500).send();
+            })
+    })
+})
+
+app.put('/api/actualizar', jsonParser,  (req, res) => {
+
+
+    let token = req.headers.authorization;
+    token = token.replace('Bearer ', '');
+
+    jwt.verify(token, 'secret', (err, user) => {
+        if (err) {
+
+            res.statusMessage = 'Token invalido';
+            return res.status(400).send();
+        } 
+
+        if (req.body.calle && req.body.numero) {
+            var dir = {
+                calle: req.body.calle,
+                numero: req.body.numero
+            }
+        }
+        let obj = {
+            nombre: req.body.nombre,
+            direccion: dir,
+            correo: req.body.correo,
+
+        }
+
+        UsuariosLista.actualizar(user.user, obj)
+            .then(async nuevo => {
+                if (req.body.correo || req.body.password) {
+
+
+                    var pw;
+                    if (req.body.password) {
+
+                        pw = await bcrypt.hash(req.body.password, 10);
+                    }
+                    PerfilesLista.actualizar(user.user, { correo: req.body.correo, password: pw })
+                        .then(actualizado => {
+
+
+
+
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            return res.status(500).send();
+                        })
+
+
+                }
+                return res.status(200).json({});
+            })
+            .catch(error => {
+                console.log(error);
+                return res.status(500).send();
+            })
+
+
+
+
+
+    })
+})
+
 app.post('/api/register', jsonParser, (req, res)=>{
     let user = req.body.user;
     let password = req.body.password;
