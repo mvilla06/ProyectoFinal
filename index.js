@@ -63,22 +63,41 @@ app.get('/api/restauranteUser/:user', (req, res)=>{
 app.get('/api/ordersByStatus/:user/:status', (req, res)=>{
     let user = req.params.user;
     let status = req.params.status;
-    RestaurantesLista.getByUser(user)
-        .then((result)=>{
-            result = result[0].ordenes.filter((elemento)=>{
-            if(status=="all"){
-                return elemento;
-            } else {
-                if(elemento.status==status){
-                    return elemento;
-                }
-            }
+    if(user=="--"){
+        RestaurantesLista.getAll()
+            .then((result)=>{
+                result.forEach((element)=>{
+                    result = element.ordenes.filter((elemento)=>{
+                        if(elemento.status==status){
+                            return elemento;
+
+                        }
+                    });
+                });
+                console.log(result);
+                return res.status(200).json(result);
+            })
+            .catch((err)=>{
+                throw Error(err);
             });
-            return res.status(200).json(result);
-        })
-        .catch((err)=>{
-            throw Error(err);
-        });
+    } else {
+        RestaurantesLista.getByUser(user)
+            .then((result)=>{
+                result = result[0].ordenes.filter((elemento)=>{
+                if(status=="all"){
+                    return elemento;
+                } else {
+                    if(elemento.status==status){
+                        return elemento;
+                    }
+                }
+                });
+                return res.status(200).json(result);
+            })
+            .catch((err)=>{
+                throw Error(err);
+            });
+    }
 });
 
 app.get('/api/allRestaurants', (req, res)=>{

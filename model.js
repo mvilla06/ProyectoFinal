@@ -134,7 +134,7 @@ let RestaurantesLista = {
             .catch((err)=>{
                 throw Error(err);
             });
-    }
+    },
 }
 
 let Usuario = mongoose.Schema({
