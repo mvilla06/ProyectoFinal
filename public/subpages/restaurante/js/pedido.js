@@ -112,6 +112,12 @@ function watchInputs(){
 	filas[filas.length-1].cells[4].innerHTML = "$"+total;
 
 	});
+	let botonOrdenar = document.getElementById('ordenar');
+	botonOrdenar.addEventListener('click', (event)=>{
+		event.preventDefault();
+		localStorage.setItem('pedido', document.getElementById("menu"));
+
+	});
 }
 
 function init(){

@@ -47,9 +47,12 @@ let Restaurante = mongoose.Schema({
         id:String,
         timestamp: Date,
         direccion:{
-            calle:String,
-            numero:Number
+            type:String
         },
+        articulos:[{
+            nombre:String,
+            cantidad: Number
+        }],
         status:String
     }]
 });
@@ -111,7 +114,28 @@ let RestaurantesLista = {
 			.catch((err)=>{
 				throw Error(err);
 			});
-	}
+	},
+    colocarPedido : function(correoParam, pedidos){
+        let restaurante = {
+            ordenes : pedidos 
+        }
+        return Restaurantes.update({correo: correoParam}, restaurante)
+            .then((result)=>{
+                return restaurante;
+            })
+            .catch((err)=>{
+                throw Error(err);
+            });
+    },
+    obtenerPedidos : function(correoParam){
+        return Restaurantes.find({correo: correoParam})
+            .then((result)=>{
+                return result;
+            })
+            .catch((err)=>{
+                throw Error(err);
+            });
+    }
 }
 
 let Usuario = mongoose.Schema({
