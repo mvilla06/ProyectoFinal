@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" type="text/css" href="../../css/index.css">
+    <title>Trabajos</title>
+  </head>
+  <body>
+    <main>
+      <header>Trabajos</header>
+      <div id=ordersDiv>
+        <form id="filterForm">
+          <label for="courierFilter">Filtrar míos: </label>
+          <select id="status" name="status">
+            <option value="all">Todos</option>
+            <option value="mios">Míos</option>
+          </select>
+          <input type="submit" name="filterBtn" id="filterBtn">
+        </form>
+        <table id="orders">
+          <tr>
+            <th> Id. </th>
+            <th> Hora </th>
+            <th> Dirección de envío </th>
+            <th> Artículos </th>
+            <th> Estatus </th>
+            <th> Actualizar </th>
+          </tr>
+        </table>
+      </div>
+    </main>
+    <script type="text/javascript" src="./courierHome.js"></script>
+  </body>
+</html>
