@@ -4,33 +4,35 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" type="text/css" href="../../css/index.css">
-    <title>Your orders</title>
+    <title>Mis órdenes</title>
   </head>
   <body>
   	<main>
-  		<header>My orders</header>
+  		<header>Mis órdenes</header>
       <div id=ordersDiv>
         <form id="filterForm">
-          <label for="statusFilter">Filter by order status: </label>
-          <select id="status">
+          <label for="statusFilter">Filtrar por estatus: </label>
+          <select id="status" name="status">
             <option value="all">All</option>
-            <option value="placed">Placed</option>
-            <option value="prepared">Prepared</option>
-            <option value="delivery">In elivery</option>
-            <option value="finished">Finished</option>
+            <option value="placed">Ordenado</option>
+            <option value="prepared">Preparado</option>
+            <option value="delivery">Enviado</option>
+            <option value="finished">Finalizado</option>
           </select>
           <input type="submit" name="filterBtn" id="filterBtn">
         </form>
     		<table id="orders">
           <tr>
             <th> Id. </th>
-            <th> Timestamp </th>
-            <th> Location </th>
-            <th> Amount </th>
-            <th> Status </th>
+            <th> Hora </th>
+            <th> Dirección de envío </th>
+            <th> Artículos </th>
+            <th> Estatus </th>
+            <th> Actualizar </th>
           </tr>
     		</table>
       </div>
     </main>
+    <script type="text/javascript" src="./js/misPedidos.js"></script>
   </body>
 </html>

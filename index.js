@@ -61,6 +61,23 @@ app.get('/api/restauranteUser/:user', (req, res)=>{
         });
 });
 
+app.get('/api/ordersByStatus/:user/:status', (req, res)=>{
+    let user = req.params.user;
+    let status = req.params.user;
+    RestaurantesLista.getByUser(user)
+        .then((result)=>{
+            result = result[0].ordenes.filter((elemento)=>{
+                if(elemento.status==status){
+                    return elemento;
+                }
+            });
+            return res.status(200).json(result);
+        })
+        .catch((err)=>{
+            throw Error(err);
+        });
+});
+
 app.get('/api/allRestaurants', (req, res)=>{
     
     RestaurantesLista.getAll()
@@ -273,12 +290,65 @@ app.post('/api/newRestaurant/', jsonParser, (req, res) =>{
     });
 });
 
+app.post('/api/newOrder/', jsonParser, (req, res) =>{
+    let correoRestaurante = req.body.restaurante;
+    RestaurantesLista.obtenerPedidos(correoRestaurante)
+    .then((response)=>{
+        let direccion = req.body.cliente;
+        let id = uuid.v4();
+        let timestamp = new Date();
+        let articulos = req.body.articulos;
+        let status = "Ordenado";
+        let pedido = {
+            id,
+            timestamp,
+            direccion,
+            articulos,
+            status
+        }
+        response[0].ordenes.push(pedido);
+        RestaurantesLista.colocarPedido(correoRestaurante, response[0].ordenes)
+        .then((response)=>{
+            return res.status(201).json(pedido);
+        })
+        .catch((err)=>{
+            throw Error(err);
+        });
+    })
+    .catch((err)=>{
+        throw Error(err);
+    });
+});
+
 app.put('/api/updateRestaurant/', jsonParser, (req, res) =>{
     let restaurante = req.body;
-    console.log(restaurante);
     RestaurantesLista.updateRestaurant(restaurante)
     .then((response)=>{
         return res.status(202).json(restaurante);
+    })
+    .catch((err)=>{
+        throw Error(err);
+    });
+});
+
+app.put('/api/updatePedido/', jsonParser, (req, res) =>{
+    let restaurante = req.body.restaurante;
+    let status = req.body.status;
+    let pedido = req.body.pedido;
+    RestaurantesLista.obtenerPedidos(restaurante)
+    .then((response)=>{
+        response[0].ordenes.forEach((element)=>{
+            if(element.id==pedido){
+                element.status=status;
+            }
+        });
+        RestaurantesLista.colocarPedido(restaurante, response[0].ordenes)
+        .then((response)=>{
+            return res.status(202).json(pedido);
+        })
+        .catch((err)=>{
+            throw Error(err);
+        });
     })
     .catch((err)=>{
         throw Error(err);
