@@ -88,7 +88,6 @@ let RestaurantesLista = {
 			});
 	},
 	newRestaurant : function(restaurant){
-		console.log(restaurant);
 		return Restaurantes.create(restaurant)
 		.then((response)=>{
 			return restaurant;
