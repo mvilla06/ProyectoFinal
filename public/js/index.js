@@ -82,8 +82,28 @@ function displayResults(responseJSON){
     });
 }
 
+function checkSession(){
+    $.ajax({
+        method:'GET',
+        headers:{
+            authorization: 'Bearer '+localStorage.getItem('token')
+        },
+        url: 'api/session',
+        success:(function(){
+            $('nav').empty();
+            $('nav').html('<a href="./subpages/usuario/Home.html">Inicio</a>            <a href="./index.html">Explorar</a>             <a href="./subpages/usuario/Ordenes.html">Órdenes</a>             <a href="./subpages/usuario/Perfil.html" id="perfil">&#x1F464</a>')
+        }),
+        error:(err=>{
+            if(err.status!=400){
+                throw err;
+            }
+        })
+    })
+}
+
 
 function init(){
+    checkSession()
     displayDB();
     watchSearch();
     watchResults();

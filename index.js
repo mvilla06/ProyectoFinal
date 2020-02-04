@@ -259,6 +259,21 @@ app.post('/api/register', jsonParser, (req, res)=>{
     })
 })
 
+app.get('/api/session', (req,res)=>{
+    let token = req.headers.authorization;
+    token = token.replace('Bearer ', '');
+
+    jwt.verify(token, 'secret', (err, user) => {
+        if (err) {
+
+            res.statusMessage = 'Token invalido';
+            return res.status(400).send();
+        } 
+        else 
+        return res.status(200).send();
+    })
+})
+
 app.post('/api/login', jsonParser, (req, res)=>{
     console.log('hola')
     let user = req.body.user;
