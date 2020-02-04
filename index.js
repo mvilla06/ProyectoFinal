@@ -341,12 +341,12 @@ app.post('/api/newOrder/', jsonParser, (req, res) => {
 
         let correoRestaurante = req.body.restaurante;
         RestaurantesLista.obtenerPedidos(correoRestaurante)
-            .then((response) => {
+            .then(async (response) => {
                 let direccion;
-                UsuariosLista.perfil(user.user).then(perfil=>{
+                await UsuariosLista.perfil(user.user).then(perfil=>{
                     console.log(perfil);
-                    direccion = perfil[0].direccion.calle+' '+perfil[0].direccion.numero;
-                    console.log(direccion)
+                     direccion = perfil[0].direccion.calle+' '+perfil[0].direccion.numero;
+                    
                 })
                 .catch(err=>{
                     throw Error(err);
@@ -364,8 +364,9 @@ app.post('/api/newOrder/', jsonParser, (req, res) => {
                     status
                 }
                 response[0].ordenes.push(pedido);
-                RestaurantesLista.colocarPedido(correoRestaurante, response[0].ordenes)
-                    .then((response) => {
+                RestaurantesLista.colocarPedido (correoRestaurante, response[0].ordenes)
+                    .then( (response) => {
+                        console.log(response);
                         let articulos = [];
                         for (let i=0; i<req.body.articulos.length;i++){
                             articulos.push(req.body.articulos[i].nombre)
