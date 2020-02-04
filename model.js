@@ -140,6 +140,7 @@ let RestaurantesLista = {
 let Usuario = mongoose.Schema({
     nombre: String,
     pedidos:[{
+        id:String,
         articulos:[String], 
         restaurante:String, 
         total:Number, 

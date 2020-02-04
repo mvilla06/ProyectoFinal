@@ -376,7 +376,8 @@ app.post('/api/newOrder/', jsonParser, (req, res) => {
                             restaurante: req.body.restauranteNombre,
                             total: req.body.total,
                             status: "Recibido",
-                            confirmacion: uuid.v4()
+                            confirmacion: uuid.v4(),
+                            id:id
                         }
 
                         UsuariosLista.ordenar(user.user, obj)
