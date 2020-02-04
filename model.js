@@ -53,7 +53,8 @@ let Restaurante = mongoose.Schema({
             nombre:String,
             cantidad: Number
         }],
-        status:String
+        status:String,
+        usuario:String
     }]
 });
 
@@ -181,6 +182,14 @@ let UsuariosLista = {
     comentar:function(){
 
     }, 
+    actualizarOrden:function(correo, pedidos){
+        return Usuarios.findOneAndUpdate({correo:correo}, {pedidos:pedidos},{omitUndefined:true}).then(resultado=>{
+            return resultado;
+        })
+        .catch(error=>{
+            throw error;
+        })
+    },
     perfil:function(correo){
         return Usuarios.find({correo:correo})
             .then(usuario=>{

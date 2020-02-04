@@ -149,6 +149,7 @@ function watchInputs(){
 				restauranteNombre: nombre,
 				articulos: articulos,
 				total: total
+				
 			}
 			console.log(data);
 

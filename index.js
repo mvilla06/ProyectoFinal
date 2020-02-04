@@ -356,12 +356,14 @@ app.post('/api/newOrder/', jsonParser, (req, res) => {
                 let timestamp = new Date();
                 let articulos = req.body.articulos;
                 let status = "Ordenado";
+                let usuario = user.user;
                 let pedido = {
                     id,
                     timestamp,
                     direccion,
                     articulos,
-                    status
+                    status,
+                    usuario
                 }
                 response[0].ordenes.push(pedido);
                 RestaurantesLista.colocarPedido (correoRestaurante, response[0].ordenes)
@@ -414,11 +416,30 @@ app.put('/api/updatePedido/', jsonParser, (req, res) =>{
     let restaurante = req.body.restaurante;
     let status = req.body.status;
     let pedido = req.body.pedido;
+    
+    let pedidos = []
     RestaurantesLista.obtenerPedidos(restaurante)
     .then((response)=>{
         response[0].ordenes.forEach((element)=>{
             if(element.id==pedido){
                 element.status=status;
+                let correo = element.usuario;
+                UsuariosLista.perfil(correo).then(resultado=>{
+                    console.log(correo)
+                    pedidos = resultado[0].pedidos;
+                    pedidos.forEach((element)=>{
+                        if(element.id ==pedido){
+                            element.status =status;
+                        }
+                    });
+                    UsuariosLista.actualizarOrden(correo, pedidos)
+                    .then(nuevo=>{
+                        
+                    })
+                    .catch(error=>{
+                        console.log(error);
+                    })
+                })
             }
         });
         RestaurantesLista.colocarPedido(restaurante, response[0].ordenes)
