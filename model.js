@@ -151,13 +151,7 @@ let Usuario = mongoose.Schema({
         calle:String, 
         numero:Number
     },
-    carrito:{
-        articulos:[{
-            nombre:String,
-            cantidad: Number,
-            precio: Number
-        }]
-    },
+    
     correo:String
 });
 
