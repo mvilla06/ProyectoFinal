@@ -30,7 +30,6 @@ app.get('/api/buscarRestaurante/:text', (req, res)=>{
     searchQuery = searchQuery.replace(/\+/g, ' ');
     RestaurantesLista.buscar(searchQuery)
         .then((result)=>{
-            console.log(result)
             return res.status(200).json(result);
         })
         .catch((err)=>{
@@ -75,7 +74,6 @@ app.get('/api/ordersByStatus/:user/:status', (req, res)=>{
                 }
             }
             });
-            console.log(result);
             return res.status(200).json(result);
         })
         .catch((err)=>{
@@ -87,11 +85,9 @@ app.get('/api/allRestaurants', (req, res)=>{
     
     RestaurantesLista.getAll()
         .then((result)=>{
-            console.log(result)
             return res.status(200).json(result);
         })
         .catch((err)=>{
-            console.log( Error(err));
             return res.status(500).send();
         });
 });

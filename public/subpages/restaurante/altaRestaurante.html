@@ -11,13 +11,13 @@
       <main>
           <form id='newRestaurant'>
             <label for="nombre">Nombre del restaurante: </label><br>
-            <input name='nombre' type="text"><br>
+            <input name='nombre' type="text" required="true"><br>
             <label for="desc">Descripción del restaurante: </label><br>
-            <input name='desc' type="text"><br>
+            <input name='desc' type="text" required="true"><br>
             <label for="dir">Dirección del restaurante: </label><br>
-            <input name='dir' type="text"><br>
+            <input name='dir' type="text" required="true"><br>
             <label for="tel">Teléfono del restaurante: </label><br>
-            <input name='tel' type="tel"><br>
+            <input name='tel' type="tel" required="true"><br>
             <label for="gen">Género del restaurante: </label><br>
             <select name="gen">
               <option value="burger">Hamburguesas</option>
@@ -26,9 +26,9 @@
               <option value="wings">Alitas</option>
             </select> <br>
             <label for="mail">Correo del restaurante: </label><br>
-            <input name='mail' type="email"><br>
+            <input name='mail' type="email" required="true"><br>
             <label for="pass">Contraseña del restaurante: </label><br>
-            <input name='pass' type="password"><br>
+            <input name='pass' type="password" required="true"><br>
             <h5>Menú</h5>
             <div id="menuDiv"> 
                 <table id="menuTable">
