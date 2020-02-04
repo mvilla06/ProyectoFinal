@@ -88,7 +88,6 @@ let RestaurantesLista = {
 			});
 	},
 	newRestaurant : function(restaurant){
-		console.log(restaurant);
 		return Restaurantes.create(restaurant)
 		.then((response)=>{
 			return restaurant;
@@ -135,7 +134,7 @@ let RestaurantesLista = {
             .catch((err)=>{
                 throw Error(err);
             });
-    }
+    },
 }
 
 let Usuario = mongoose.Schema({

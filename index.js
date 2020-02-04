@@ -30,7 +30,6 @@ app.get('/api/buscarRestaurante/:text', (req, res)=>{
     searchQuery = searchQuery.replace(/\+/g, ' ');
     RestaurantesLista.buscar(searchQuery)
         .then((result)=>{
-            console.log(result)
             return res.status(200).json(result);
         })
         .catch((err)=>{
@@ -63,30 +62,51 @@ app.get('/api/restauranteUser/:user', (req, res)=>{
 
 app.get('/api/ordersByStatus/:user/:status', (req, res)=>{
     let user = req.params.user;
-    let status = req.params.user;
-    RestaurantesLista.getByUser(user)
-        .then((result)=>{
-            result = result[0].ordenes.filter((elemento)=>{
-                if(elemento.status==status){
-                    return elemento;
-                }
+    let status = req.params.status;
+    if(user=="--"){
+        RestaurantesLista.getAll()
+            .then((result)=>{
+                result.forEach((element)=>{
+                    result = element.ordenes.filter((elemento)=>{
+                        if(elemento.status==status){
+                            return elemento;
+
+                        }
+                    });
+                });
+                console.log(result);
+                return res.status(200).json(result);
+            })
+            .catch((err)=>{
+                throw Error(err);
             });
-            return res.status(200).json(result);
-        })
-        .catch((err)=>{
-            throw Error(err);
-        });
+    } else {
+        RestaurantesLista.getByUser(user)
+            .then((result)=>{
+                result = result[0].ordenes.filter((elemento)=>{
+                if(status=="all"){
+                    return elemento;
+                } else {
+                    if(elemento.status==status){
+                        return elemento;
+                    }
+                }
+                });
+                return res.status(200).json(result);
+            })
+            .catch((err)=>{
+                throw Error(err);
+            });
+    }
 });
 
 app.get('/api/allRestaurants', (req, res)=>{
     
     RestaurantesLista.getAll()
         .then((result)=>{
-            console.log(result)
             return res.status(200).json(result);
         })
         .catch((err)=>{
-            console.log( Error(err));
             return res.status(500).send();
         });
 });

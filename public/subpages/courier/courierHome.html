@@ -4,24 +4,21 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" type="text/css" href="../../css/index.css">
-    <title>Mis órdenes</title>
+    <title>Trabajos</title>
   </head>
   <body>
-  	<main>
-  		<header>Mis órdenes</header>
+    <main>
+      <header>Trabajos</header>
       <div id=ordersDiv>
         <form id="filterForm">
-          <label for="statusFilter">Filtrar por estatus: </label>
+          <label for="courierFilter">Filtrar míos: </label>
           <select id="status" name="status">
-            <option value="all">All</option>
-            <option value="Ordenado">Ordenado</option>
-            <option value="Preparado">Preparado</option>
-            <option value="Enviado">Enviado</option>
-            <option value="Finalizado">Finalizado</option>
+            <option value="all">Todos</option>
+            <option value="mios">Míos</option>
           </select>
           <input type="submit" name="filterBtn" id="filterBtn">
         </form>
-    		<table id="orders">
+        <table id="orders">
           <tr>
             <th> Id. </th>
             <th> Hora </th>
@@ -30,9 +27,9 @@
             <th> Estatus </th>
             <th> Actualizar </th>
           </tr>
-    		</table>
+        </table>
       </div>
     </main>
-    <script type="text/javascript" src="./js/misPedidos.js"></script>
+    <script type="text/javascript" src="./courierHome.js"></script>
   </body>
 </html>
